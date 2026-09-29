@@ -17,13 +17,20 @@ public class FuncionarioController {
     }
 
     @PostMapping
-    public FuncionarioModel registrarFuncionario(@Valid @RequestBody FuncionarioRequestDTO  funcionarioRequestDTO){
+    public FuncionarioResponseDTO registrarFuncionario(@Valid @RequestBody FuncionarioRequestDTO  funcionarioRequestDTO){
         FuncionarioModel funcionario = new FuncionarioModel(
                 funcionarioRequestDTO.nome(),
                 funcionarioRequestDTO.email(),
                 funcionarioRequestDTO.senha()
         );
-        return funcionarioService.registrarFuncionario(funcionario);
+
+        FuncionarioModel funcionarioSalvo = funcionarioService.registrarFuncionario(funcionario);
+
+        return new FuncionarioResponseDTO(
+                funcionarioSalvo.getId(),
+                funcionarioSalvo.getNome(),
+                funcionarioSalvo.getEmail()
+        );
     }
 
 
