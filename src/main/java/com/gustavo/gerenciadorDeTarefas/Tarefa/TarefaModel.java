@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Locale;
 
 @Getter
 @Setter
@@ -14,10 +15,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "tb_tarefas")
 public class TarefaModel {
-
-    @ManyToOne
-    @JoinColumn(name = "funcionario_Id")
-    private FuncionarioModel funcionario;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,13 +26,6 @@ public class TarefaModel {
 
     private LocalDate data;
 
-    public TarefaModel(String nome, String descricao, LocalDate data, FuncionarioModel funcionario){
-        this.nome = nome;
-        this.descricao = descricao;
-        this.data = data;
-        this.funcionario = funcionario;
-    }
-
     @Enumerated(EnumType.STRING)
     @Column(name = "Status_Tarefa")
     private StatusTarefa statusTarefa;
@@ -44,9 +34,16 @@ public class TarefaModel {
     @Column(name = "Prioridade_Tarefa")
     private PrioridadeTarefa prioridadeTarefa;
 
-    public TarefaModel(String nome, String descricao, LocalDate data, StatusTarefa statusTarefa, FuncionarioModel funcionario, PrioridadeTarefa prioridadeTarefa) {
-        this(nome, descricao, data, funcionario);
-        this.statusTarefa = StatusTarefa.PENDENTE;
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id")
+    private FuncionarioModel funcionario;
+
+    public TarefaModel(String nome, String descricao, LocalDate data, PrioridadeTarefa prioridadeTarefa, FuncionarioModel funcionario){
+        this.nome = nome;
+        this.descricao = descricao;
+        this.data = data;
         this.prioridadeTarefa = prioridadeTarefa;
+        this.funcionario = funcionario;
+        this.statusTarefa = StatusTarefa.PENDENTE;
     }
 }
