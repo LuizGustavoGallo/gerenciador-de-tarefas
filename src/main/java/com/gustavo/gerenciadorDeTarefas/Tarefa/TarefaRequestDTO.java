@@ -13,7 +13,5 @@ public record TarefaRequestDTO(
 
         @NotNull(message = "Informe a data")LocalDate data,
 
-        @NotNull(message = "Informe a prioridade") PrioridadeTarefa prioridadeTarefa,
-
-        @NotNull(message = "Informe o funcionario") Long funcionarioId
+        @NotNull(message = "Informe a prioridade") PrioridadeTarefa prioridadeTarefa
 ) {}

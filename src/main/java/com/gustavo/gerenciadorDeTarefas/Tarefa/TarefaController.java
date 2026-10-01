@@ -1,7 +1,9 @@
 package com.gustavo.gerenciadorDeTarefas.Tarefa;
 
+import com.gustavo.gerenciadorDeTarefas.Funcionario.FuncionarioModel;
 import com.gustavo.gerenciadorDeTarefas.Funcionario.FuncionarioResumoDTO;
 import jakarta.validation.Valid;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +21,13 @@ public class TarefaController {
 
     @PostMapping
     public TarefaResponseDTO registrarTarefa(@Valid @RequestBody TarefaRequestDTO tarefaRequestDTO){
+
+        FuncionarioModel funcionarioAutenticado = (FuncionarioModel) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
         TarefaModel tarefaSalva = tarefaService.registrarTarefa(
-                tarefaRequestDTO.funcionarioId(),
+                funcionarioAutenticado.getId(),
                 tarefaRequestDTO.nome(),
                 tarefaRequestDTO.descricao(),
                 tarefaRequestDTO.data(),
