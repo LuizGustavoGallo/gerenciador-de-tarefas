@@ -1,5 +1,6 @@
 package com.gustavo.gerenciadorDeTarefas;
 
+import com.gustavo.gerenciadorDeTarefas.Auth.CredenciaisInvalidasException;
 import com.gustavo.gerenciadorDeTarefas.Funcionario.FuncionarioNaoEncontradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,5 +13,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FuncionarioNaoEncontradoException.class)
     public ResponseEntity<String> handleFuncionarioNaoEncontrado(FuncionarioNaoEncontradoException ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(CredenciaisInvalidasException.class)
+    public ResponseEntity<String> handleCredenciaisNaoEncontradas(CredenciaisInvalidasException ex){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 }
